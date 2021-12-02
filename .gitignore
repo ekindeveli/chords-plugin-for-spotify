@@ -142,7 +142,7 @@ secret.py
 
 # Package Files
 Auth_token.json
-song_lyrics.txt
+song_chords.txt
 
 # PyCharm Files
 .idea/
