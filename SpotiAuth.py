@@ -42,6 +42,7 @@ class SpotiAuth:
         code = code_intermediate1.split("#")[0]
         process.send_signal(signal.SIGTERM)    # terminate server
         print("successfully obtained authorization code")
+        driver.close()
         return code
 
     @staticmethod
@@ -114,4 +115,10 @@ class SpotiAuth:
             artist_name = ['']
             is_playing = False
             return song_name, artist_name[0], is_playing
+        except TypeError:
+            # If file exists, delete it #
+            if os.path.isfile("Auth_token.json"):
+                os.remove("Auth_token.json")
+            else:  # If not, show an error #
+                raise TypeError('An unexpected TypeError was raised.')
 

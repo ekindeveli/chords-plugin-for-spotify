@@ -51,16 +51,7 @@ class ChordScraper:
     @staticmethod
     def search_string_creator(song, artist):
         song = ChordScraper.query_cleaner(song)
-        if " - " in song:
-            ind = song.index(" - ")
-            song = song[:ind]
-        if " (" in song:
-            ind = song.index(" (")
-            song = song[:ind]
         artist = ChordScraper.query_cleaner(artist)
-        if " and" in artist:
-            ind = artist.index(" and")
-            artist = artist[:ind]
         ulti_search_words = []
         nsong = song.split(" ")
         nartist = artist.split(" ")
@@ -90,7 +81,7 @@ class ChordScraper:
             WebDriverWait(driver, 20, ignored_exceptions=ignored_exceptions) \
                 .until(EC.presence_of_element_located((By.CLASS_NAME, "_3uKbA")))
         except TimeoutException:
-            print("Timeout Exception Occured in chord_entry_selector")
+            print("Timeout Exception Occured in Get_Chordslink")
             chord_link = ""
             return driver, chord_link
         tabs_list = driver.find_elements_by_class_name("_3uKbA")
@@ -110,7 +101,7 @@ class ChordScraper:
             except StaleElementReferenceException:
                 print("StaleElementReferenceException Raised")
             except TimeoutException:
-                print("Timeout Exception Occured in chord_entry_selector #2")
+                print("Timeout Exception Occured in Get_Chordslink")
         tabs_list_5star = []
         tabs_list_4halfstar = []
         tabs_list_4star = []
