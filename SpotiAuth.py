@@ -19,42 +19,44 @@ class SpotiAuth:
     def get_auth_code():
         payload = secret.payload
         payload['grant_type'] = 'authorization_code'
-        i = 0
         cmd = 'python -m http.server'
         process = subprocess.Popen(cmd)  # open localhost http server:
         # get the required code from the response url
         url = f'https://accounts.spotify.com/authorize?client_id={payload.get("client_id")}&response_type=code&' \
               f'redirect_uri={payload.get("redirect_uri")}&scope={payload.get("scope")}'
-
         driver = webdriver.Chrome(ChromeDriverManager().install())
         driver.get(url)
 
+        i = 0
+        p = 0
         codeurl = ''
-        while i == 0:
+        while i == 0 and p < 42:
             codeurl = driver.current_url
             time.sleep(2)
             if '8000/?code=' in codeurl:
                 codeurl = str(driver.current_url)
                 i = 1
             else:
-                pass
+                p += 1
         code_intermediate1 = codeurl.split("=")[1]
         code = code_intermediate1.split("#")[0]
         process.send_signal(signal.SIGTERM)    # terminate server
-        print("successfully obtained authorization code")
+        print("Successfully Obtained Authorization Code.")
         driver.close()
         return code
 
     @staticmethod
     def get_token(code):
-
-        payload = secret.payload
-        payload['code'] = str(code)
-        r = requests.post('https://accounts.spotify.com/api/token', data=payload)
-        response = r.json()
-        with open('Auth_token.json', 'w+', encoding='utf-8') as f:
-            json.dump(response, f, ensure_ascii=False, indent=4)
-        return None
+        if len(code) < 2:
+            raise ValueError("Failed to obtain required code. Received empty string from function: get_auth_code().")
+        else:
+            payload = secret.payload
+            payload['code'] = str(code)
+            r = requests.post('https://accounts.spotify.com/api/token', data=payload)
+            response = r.json()
+            with open('Auth_token.json', 'w+', encoding='utf-8') as f:
+                json.dump(response, f, ensure_ascii=False, indent=4)
+            return None
 
     @staticmethod
     def refresh_auth(r_token):  # to run every 50 minutes to refresh the access token
@@ -64,7 +66,6 @@ class SpotiAuth:
         payload['refresh_token'] = str(r_token)
         r = requests.post('https://accounts.spotify.com/api/token', data=payload)
         refresh_response = r.json()
-
         return refresh_response
 
     @staticmethod

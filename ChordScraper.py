@@ -15,40 +15,6 @@ class ChordScraper:
         pass
 
     @staticmethod
-    def query_cleaner(query1):
-        if ',' in query1:
-            query1 = query1.replace(',', '')
-        if "'" in query1:
-            query1 = query1.replace("'", '')
-        if 'ó' in query1:
-            query1 = query1.replace('ó', 'o')
-        if '&' in query1:
-            query1 = query1.replace("&", 'and')
-        if ':' in query1:
-            query1 = query1.replace(":", '')
-        if '.' in query1:
-            query1 = query1.replace('.', '')
-        if '(' in query1:
-            query1 = query1.replace('(', '')
-        if ')' in query1:
-            query1 = query1.replace(')', '')
-        if 'ü' in query1:
-            query1 = query1.replace('ü', 'u')
-        if 'ğ' in query1:
-            query1 = query1.replace('ğ', 'g')
-        if 'ö' in query1:
-            query1 = query1.replace('ö', 'o')
-        if 'ç' in query1:
-            query1 = query1.replace('ç', 'c')
-        if 'ş' in query1:
-            query1 = query1.replace('ş', 's')
-        if 'ı' in query1:
-            query1 = query1.replace('ı', 'i')
-        query1 = query1.strip()
-        query1 = query1.lower()
-        return query1
-
-    @staticmethod
     def search_string_creator(song, artist):
         song = ChordScraper.query_cleaner(song)
         artist = ChordScraper.query_cleaner(artist)
@@ -219,3 +185,36 @@ class ChordScraper:
         retrieved_song = song
         return html_source_text, retrieved_song
 
+    @staticmethod
+    def query_cleaner(query1):
+        if ',' in query1:
+            query1 = query1.replace(',', '')
+        if "'" in query1:
+            query1 = query1.replace("'", '')
+        if 'ó' in query1:
+            query1 = query1.replace('ó', 'o')
+        if '&' in query1:
+            query1 = query1.replace("&", 'and')
+        if ':' in query1:
+            query1 = query1.replace(":", '')
+        if '.' in query1:
+            query1 = query1.replace('.', '')
+        if '(' in query1:
+            query1 = query1.replace('(', '')
+        if ')' in query1:
+            query1 = query1.replace(')', '')
+        if 'ü' in query1:
+            query1 = query1.replace('ü', 'u')
+        if 'ğ' in query1:
+            query1 = query1.replace('ğ', 'g')
+        if 'ö' in query1:
+            query1 = query1.replace('ö', 'o')
+        if 'ç' in query1:
+            query1 = query1.replace('ç', 'c')
+        if 'ş' in query1:
+            query1 = query1.replace('ş', 's')
+        if 'ı' in query1:
+            query1 = query1.replace('ı', 'i')
+        query1 = query1.strip()
+        query1 = query1.lower()
+        return query1
