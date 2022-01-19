@@ -16,7 +16,8 @@ class ChordScraper:
 
     @staticmethod
     def search_string_creator(song, artist):
-        song = ChordScraper.query_cleaner(song)
+        msong = song.split(' - ')[0]
+        song = ChordScraper.query_cleaner(msong)
         artist = ChordScraper.query_cleaner(artist)
         ulti_search_words = []
         nsong = song.split(" ")

@@ -45,7 +45,7 @@ threading.Thread(target=SpotiAuth.SpotiAuth.recursive_reinit,
 
 # Creating the Window for the GUI
 root = Tk()
-root.title("Spotify's Chords Plugin")
+root.title("Spotify Chords Plugin")
 root.configure(background='#0066CC')
 root.minsize(420, 220)
 root.maxsize(880, 920)
